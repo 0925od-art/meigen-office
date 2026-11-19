@@ -68,7 +68,7 @@ id は `YYYY-MM-DD-HH`（HH は 08 / 12 / 22）。例：`2026-11-20-08`
    - `note` の指示どおりに posts/<id>.json を直し、画像を作り直し、push し、アセットを上げ直す
    - `db_write` で images / imageUrls / caption など直した項目と `status: "承認待ち"`, `note: ""` を update（ifVersion 必須）
    - reports に「修正しました：〜」と報告
-4. 今日（日本時間）の 08 / 12 / 22 の3本を作る。すでに同じ id の投稿が管理画面にあればその枠は作らない
+4. 今日（日本時間）の 08 / 12 / 22 の3本を作る。すでに同じ `slot` の投稿が管理画面にあればその枠は作らない（1つの枠に投稿は1本だけ）
    - 08:00 の枠が実行時刻より前に過ぎていても作ってよい（代表が承認すれば翌日以降に回す判断は代表がする）
 5. 各投稿を `posts/<id>.json` に保存し、画像を作る：
    `python3 make_slides.py posts/<id>.json images/<YYYY-MM-DD>`
@@ -83,6 +83,11 @@ id は `YYYY-MM-DD-HH`（HH は 08 / 12 / 22）。例：`2026-11-20-08`
 12. `reports` に4人分の報告を add（`at`: ISO時刻、`from`: 係名、`fromId`: neta / daihon / design / toukou、`text`: 1〜3文）
     最後の投稿・報告係の報告は「代表、本日の3本の確認をお願いします」で締める
 13. `used_quotes.json` に今日の3本（日付・人物・名言の冒頭・出典）を追記して commit / push
+
+## 管理画面の道具が使えないとき
+
+`db_list` / `db_write` / `upload_asset`（claude-artifacts のツール）が見つからない場合は、ToolSearch で探す。それでも無ければ作業を止め、
+最後の報告で「管理画面の道具が使えず、書き込めませんでした」とはっきり伝える。投稿案のファイルと画像の push までは行ってよい。
 
 ## 仕事B：投稿（スケジュール実行 08:01 / 12:01 / 22:01）
 
